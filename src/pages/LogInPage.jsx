@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -48,18 +49,19 @@ function LoginPage() {
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-[#29ABE2] hover:bg-[#0077BE] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-[#005f73] hover:bg-[#FFC107] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Log In
             </button>
-            <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-[#29ABE2] hover:text-[#0077BE]">
+            <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-[#005f73] hover:text-[#FFC107]">
               Sign Up
             </Link>
           </div>
         </form>
       </div>
     </div>
+    <Footer />
     </>
   );
 }
