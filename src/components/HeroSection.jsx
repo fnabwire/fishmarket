@@ -10,10 +10,10 @@ function HeroSection() {
         Connect directly with local fishermen and get the freshest catch delivered to your door.
       </p>
       <div className="flex gap-4 items-center justify-center">
-        <button className="bg-[#005f73] hover:bg-[#0077BE] text-white py-3 px-6 rounded-md transition duration-300">
+        <button className="bg-[#29ABE2] hover:bg-[#0077BE] text-white py-3 px-6 rounded-md transition duration-300">
           Explore Listings
         </button>
-        <button className="bg-[#005f73] border-2 border-[#005f73] text-white hover:bg-[#0077BE] hover:text-white py-3 px-6 rounded-md transition duration-300">
+        <button className="border-2 border-[#29ABE2] text-[#29ABE2] hover:bg-[#0077BE] hover:text-white py-3 px-6 rounded-md transition duration-300">
           Sell Your Fish
         </button>
       </div>
