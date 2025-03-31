@@ -2,8 +2,8 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import HeroSection from '../components/HeroSection'
-// import FishListings from '../components/FishListings'
-import Featured from '../components/Featured'
+import FishListings from '../components/FishListings'
+import Footer from '../components/Footer' 
 
 function HomePage() {
   return (
@@ -12,7 +12,6 @@ function HomePage() {
       <HeroSection />
       {/* <FishListings /> */}
       <Featured/>
-      <Footer/>
     </div>
   )
 }
