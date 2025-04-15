@@ -5,6 +5,8 @@ import SignUpPage from './pages/SignUpPage'
 import LogInPage from './pages/LogInPage'
 import FishListingsPage from './pages/FishListingsPage'
 import AboutPage from './pages/AboutPage';
+import FishermanDashboardPage from './pages/FisherManDashboardPage'
+import BuyerDashboardPage from './pages/BuyerDashboardPage'
 import './App.css'
 
 function App() {
@@ -16,6 +18,8 @@ function App() {
         <Route path="/login" element={<LogInPage />} />
         <Route path="/fish-listings" element={<FishListingsPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/fisherman-dashboard" element={<FishermanDashboardPage />} />
+        <Route path="/buyer-dashboard" element={<BuyerDashboardPage />} />
       </Routes>
     </>
   )
