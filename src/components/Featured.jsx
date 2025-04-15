@@ -22,7 +22,7 @@ export default function Featured() {
            <ListCards/>
         </div>
       </div>
-      <h1>hellooo there</h1>
+      
     </>
   );
 }
