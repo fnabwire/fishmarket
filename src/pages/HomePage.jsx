@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HeroSection from '../components/HeroSection'
-import FishListings from '../components/FishListings'
+import ImpactDiaagram from '../components/ImpactDiagram'
 import Footer from '../components/Footer' 
 
 function HomePage() {
@@ -9,7 +9,7 @@ function HomePage() {
     <div>
       <Navbar />
       <HeroSection />
-      <FishListings />
+      <ImpactDiaagram />
       <Footer />  
     </div>
   )
