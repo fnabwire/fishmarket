@@ -43,14 +43,6 @@ function Navbar() {
               to="/buyer-dashboard"
               className="hover:text-[#FFC107] transition duration-300"
             >
-              Fisherfolk
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/buyer-dashboard"
-              className="hover:text-[#FFC107] transition duration-300"
-            >
               Buyer
             </Link>
           </li>
