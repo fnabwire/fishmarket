@@ -33,12 +33,7 @@ function HeroSection() {
           </button>
         </div>
       </div>
-      {/* Decorative Waves (Optional) */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden" style={{ pointerEvents: 'none' }}>
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="fill-white text-primaryColor">
-          <path d="M1200 120L0 120 600 0z"></path>
-        </svg>
-      </div>
+      
     </div>
   );
 }
