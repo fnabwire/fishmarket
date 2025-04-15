@@ -44,26 +44,31 @@ const navLinks = () => (
         Home
       </Link>
     </li>
-    <li>
-      <Link to="/fish-listings" className="hover:text-[#FFC107] transition duration-300 block">
-        Fish Listings
-      </Link>
-    </li>
-    <li>
-      <Link to="/fisherman-dashboard" className="hover:text-[#FFC107] transition duration-300 block">
-        Fisherfolk
-      </Link>
-    </li>
-    <li>
-      <Link to="/buyer-dashboard" className="hover:text-[#FFC107] transition duration-300 block">
-        Buyer
-      </Link>
-    </li>
+
     <li>
       <Link to="/about" className="hover:text-[#FFC107] transition duration-300 block">
         About
       </Link>
     </li>
+
+    <li>
+      <Link to="/fish-listings" className="hover:text-[#FFC107] transition duration-300 block">
+        Fish Listings
+      </Link>
+    </li>
+
+    <li>
+      <Link to="/fisherman-dashboard" className="hover:text-[#FFC107] transition duration-300 block">
+        Fisherfolk
+      </Link>
+    </li>
+    
+    <li>
+      <Link to="/buyer-dashboard" className="hover:text-[#FFC107] transition duration-300 block">
+        Buyer
+      </Link>
+    </li>
+    
     <li>
       <Link to="/login" className="hover:text-[#FFC107] transition duration-300 block">
         Log In
