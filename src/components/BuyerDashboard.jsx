@@ -24,16 +24,6 @@ const recentOrders = [
 export default function BuyerDashboard(){
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
-      {/* Navbar */}
-      <nav className="bg-white shadow px-6 py-4 flex justify-between items-center">
-        <div className="font-bold text-xl">🛍️ Fish Marketplace</div>
-        <ul className="flex gap-6 text-sm font-medium">
-          <li className="hover:text-blue-500 cursor-pointer">Marketplace</li>
-          <li className="hover:text-blue-500 cursor-pointer">My Orders</li>
-          <li className="hover:text-blue-500 cursor-pointer">Profile</li>
-          <li className="hover:text-red-500 cursor-pointer">Logout</li>
-        </ul>
-      </nav>
 
       {/* Content */}
       <div className="max-w-6xl mx-auto px-6 py-8">
