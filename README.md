@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+ # 🐟 Fish Market Platform
+=======
+>>>>>>> a5020334fd73b1a07aeef330da216d4cd92d2762
 
 # Fish Market Platform - Setup Instructions
 
