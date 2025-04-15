@@ -24,12 +24,12 @@ function Navbar() {
           </li>
           <li>
             <Link to="/fisherman-dashboard" className="hover:text-[#FFC107] transition duration-300">
-              Fisherman Dashboard
+              Fisherfolk
             </Link>
           </li>
           <li>
             <Link to="/buyer-dashboard" className="hover:text-[#FFC107] transition duration-300">
-              Buyer Dashboard
+              Buyer
             </Link>
           </li>
 
