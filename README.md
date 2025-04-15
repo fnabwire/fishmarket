@@ -1,4 +1,4 @@
-# 🐟 Fish Market Platform
+ # 🐟 Fish Market Platform
 
 A digital marketplace connecting fishermen directly with buyers, ensuring fresh seafood reaches customers efficiently.
 
