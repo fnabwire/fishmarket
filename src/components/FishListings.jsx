@@ -55,9 +55,14 @@ export default function FishListings() {
             key={index}
             className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition duration-200"
           >
-            <div className="bg-gray-100 h-40 flex items-center justify-center text-gray-400">
-              <span className="text-xl">🖼️</span>
-            </div>
+            {/* <div className="bg-gray-100 h-40 flex items-center justify-center text-gray-400 object-cover">
+              <img src={fish.image} alt="" className="object-cover" />
+            </div> */}
+            <img
+              src={fish.image}
+              alt={fish.name}
+              className="w-full h-40 object-cover corsor-pointer hover:scale-105 transition-transform duration-200"
+            />
             <div className="p-4">
               <h2 className="text-lg font-semibold">{fish.name}</h2>
               <p className="text-sm text-gray-600">By {fish.fisherman}</p>
