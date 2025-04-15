@@ -17,6 +17,7 @@ const fishData = [
   // Add more fish entries here...
 ];
 
+
 export default function FishListings() {
   return (
     <div className="px-6 py-10 max-w-7xl mx-auto">
