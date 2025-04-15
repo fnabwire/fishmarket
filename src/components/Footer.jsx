@@ -1,21 +1,77 @@
-import React from 'react'
+import React from "react";
 
-const Footer = () => {
-    return (
-      <footer className="border-t bg-background">
-        <div className="container py-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="flex items-center gap-2">
-              {/* <fish className="h-6 w-6 text-primary" /> */}
-              <span className="text-xl font-bold">Fish Market Platform</span>
-            </div>
-            <p className="text-center text-sm text-muted-foreground md:text-right">
-              &copy; {new Date().getFullYear()} Fish Market Platform. All rights reserved.
-            </p>
+export default function Footer() {
+  return (
+    <footer className="bg-white border-t mt-12 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-gray-700">
+        {/* Logo / About */}
+        <div>
+          <h2 className="text-xl font-bold text-blue-600">
+            🐟 Fish Marketplace
+          </h2>
+          <p className="text-sm mt-2">
+            Fresh fish from the sea to your table. Connecting fishermen and
+            buyers in real time.
+          </p>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h3 className="font-semibold mb-2">Quick Links</h3>
+          <ul className="space-y-1 text-sm">
+            <li>
+              <a href="#" className="hover:text-blue-500">
+                Marketplace
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-500">
+                My Orders
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-500">
+                Profile
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Contact Info */}
+        <div>
+          <h3 className="font-semibold mb-2">Contact</h3>
+          <p className="text-sm">
+            Email:{" "}
+            <a
+              href="mailto:info@fishmarket.com"
+              className="text-blue-600 hover:underline"
+            >
+              info@fishmarket.com
+            </a>
+          </p>
+          <p className="text-sm mt-1">Phone: +254 712 345678</p>
+        </div>
+
+        {/* Social Media */}
+        <div>
+          <h3 className="font-semibold mb-2">Follow Us</h3>
+          <div className="flex gap-4 mt-2 text-blue-600 text-lg">
+            <a href="#" className="hover:text-blue-800" aria-label="Facebook">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" className="hover:text-sky-500" aria-label="Twitter">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="#" className="hover:text-pink-500" aria-label="Instagram">
+              <i className="fab fa-instagram"></i>
+            </a>
           </div>
         </div>
-      </footer>
-    );
-  };
-  
-  export default Footer;
+      </div>
+
+      <div className="text-center text-sm text-gray-500 border-t py-4">
+        © {new Date().getFullYear()} Fish Marketplace. All rights reserved.
+      </div>
+    </footer>
+  );
+}

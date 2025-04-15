@@ -1,18 +1,18 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HeroSection from '../components/HeroSection'
+import ImpactDiaagram from '../components/ImpactDiagram'
+import Footer from '../components/Footer' 
 import Featured from '../components/Featured'
-import Footer from '../components/Footer'
-
 
 function HomePage() {
   return (
     <div>
       <Navbar />
       <HeroSection />
-      {/* <FishListings /> */}
+      <ImpactDiaagram />
       <Featured/>
-      <Footer/>
+      <Footer />  
     </div>
   )
 }
