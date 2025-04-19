@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { fishListingsData } from "../../data";
+import { CartContext } from "../contexts/CartContext";
 
 const fishData = [
   {
@@ -17,7 +18,14 @@ const fishData = [
   // Add more fish entries here...
 ];
 
+
+
 export default function FishListings() {
+  const {addToCart} = useContext(CartContext)
+  // const hundleAddToCart = (fish)=>{
+  //   addToCart(fish)
+  //   console.log("Added to cart:", fish)
+  // }
   return (
     <div className="px-6 py-10 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-2">Fish Listings</h1>
@@ -68,7 +76,8 @@ export default function FishListings() {
             </div>
             <div className="px-4 pb-4">
               <button
-                onClick={() => handleAddToCart(fish)}
+                onClick={()=>addToCart(fish)}
+                type="button"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 cursor-pointer"
               >
                 <i className="fas fa-cart-plus mr-2"></i> Add to Cart
