@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import AddFishForm from "./AddFishForm";
 
 const listings = [
   {
@@ -21,12 +22,22 @@ const orders = [
 ];
 
 const FishermanDashboard = () => {
+  const [showAddFishForm, setShowAddFishForm] = useState(false);
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       {/* Content */}
       <div className="max-w-6xl mx-auto px-6 py-8">
-        <h2 className="text-2xl font-semibold mb-4">Welcome, Fisherman Mike 👋</h2>
-
+        <h2 className="text-2xl font-semibold mb-4">
+          Welcome, Fisherman Mike 👋
+        </h2>
+        <button
+          className="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600 cursor-pointer mb-6"
+          onClick={() => setShowAddFishForm(!showAddFishForm)}
+          // onClick={(setShowAddFishForm = !showAddFishForm)}
+        >
+          Add fish
+        </button>
+        {showAddFishForm && <AddFishForm />}
         {/* Fish Listings */}
         <section className="mb-10">
           <h3 className="text-xl font-semibold mb-3">Your Current Listings:</h3>

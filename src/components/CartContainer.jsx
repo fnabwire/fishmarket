@@ -3,7 +3,7 @@ import CartCard from "./Cart";
 export default function CartContainer() {
     return (
         <>
-        {/* <CartCard
+        <CartCard
             fish={{
               id: 1,
               image: "/images/tilapia.jpg",
@@ -13,8 +13,7 @@ export default function CartContainer() {
               fisherman: "Fisherman A",
             }}
             onRemove={(id) => console.log("Remove fish with id:", id)}
-          /> */}
-          <h1>hello cart</h1>
+          />
         </>
     )
 }
