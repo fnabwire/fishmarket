@@ -14,14 +14,8 @@ export default function HomePage() {
     <div>
       <Navbar />
       {cartVisible ? (
-        // <CSSTransition
-        //   in={cartVisible}
-        //   timeout={300}
-        //   classNames="fade"
-        //   unmountOnExit
-        // >
         <CartContainer />
-      ) : // </CSSTransition>
+      ) : 
       null}
       <HeroSection />
       <ImpactDiaagram />
