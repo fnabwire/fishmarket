@@ -1,9 +1,9 @@
-# 🐟 Fish Market Platform - System Design 
+# Fish Market Platform - System Design 
 
 ## Overview
 This document outlines the system design for the Fish Market Platform — a web-based application that directly connects Kenyan fisherfolks to buyers, streamlining fish sales and reducing post-harvest losses in the blue economy. The system leverages modern web technologies (React.js, Supabase) for seamless user experiences, real-time updates, and scalability.
 
-## 🏗️ 1. System Architecture
+##    1. System Architecture
 
 ### 1.1 Architecture Diagram
 
@@ -22,7 +22,7 @@ This document outlines the system design for the Fish Market Platform — a web-
 +---------------------------+     +---------------------+     +--------------------+
 ```
 
-## 👥 2. User Roles
+##  2. User Roles
 
 ### 2.1 Fisherfolk
 * Can list new fish (name, price, weight, image)
@@ -38,13 +38,13 @@ This document outlines the system design for the Fish Market Platform — a web-
 ### 2.3 Admin (future)
 * Optional: Access Supabase backend for user moderation, analytics, and debugging
 
-## 🧾 3. Entity Relationship Diagram (ERD)
+##  3. Entity Relationship Diagram (ERD)
 
 ### 3.1 Tables & Relationships
 
 **Users**
 ```
------
+
 user_id (PK)
 name
 email
@@ -56,7 +56,6 @@ created_at
 
 **FishListings**
 ```
-------------
 listing_id (PK)
 user_id (FK → Users.user_id)
 fish_type
@@ -69,7 +68,6 @@ created_at
 
 **Orders**
 ```
-------
 order_id (PK)
 listing_id (FK → FishListings.listing_id)
 buyer_id (FK → Users.user_id)
@@ -82,7 +80,6 @@ updated_at
 
 **Messages** (optional/future)
 ```
--------
 message_id (PK)
 order_id (FK → Orders.order_id)
 sender_id (FK → Users.user_id)
@@ -95,7 +92,7 @@ timestamp
 * Each Order is linked to a specific FishListing and a Buyer
 * Potential for a message table to facilitate communication between buyer and seller per order
 
-## 🧮 4. Data Flow & Workflow
+##  4. Data Flow & Workflow
 
 ### 4.1 Fisherfolk Workflow
 Signup/Login → Dashboard → Add Fish → Fish Available for Buyers → Accept/Decline Orders
@@ -112,7 +109,7 @@ Fisherfolk can update:
 * Decline → `status` = "declined"
 * Fulfill (manually marked or inferred) → `status` = "fulfilled"
 
-## 📊 5. Dashboard & Reporting
+##  5. Dashboard & Reporting
 
 ### 5.1 Fisherfolk Dashboard
 * Active Fish Listings (type, price, stock left)
@@ -132,7 +129,7 @@ Fisherfolk can update:
 * Daily/Weekly User Registrations
 * Platform Engagement (logins, listings, orders per day)
 
-## 🛡️ 6. Security & Data Management
+##  6. Security & Data Management
 * Supabase Auth (JWT) to handle secure logins and role-based access
 * RLS (Row-Level Security) enabled to prevent unauthorized access to:
     * Fish listings (only editable by their owner)
@@ -142,7 +139,7 @@ Fisherfolk can update:
     * Fisherfolk can only update their listings
     * Buyers can only view/modify their orders
 
-## 🧰 7. Tech Stack
+##  7. Tech Stack
 
 | Layer      | Tool/Tech               |
 |------------|-------------------------|
@@ -152,7 +149,7 @@ Fisherfolk can update:
 | Storage    | Supabase Storage (for images) |
 | Realtime   | Supabase Realtime (for updates to listings/orders) |
 
-## 🔮 8. Future Enhancements
+##  8. Future Enhancements
 * Integrated payment gateway (M-PESA / Stripe)
 * Delivery logistics module
 * Ratings & reviews (post-order)
@@ -161,5 +158,5 @@ Fisherfolk can update:
 * Admin dashboard with metrics and moderation tools
 * Integration with Kenya Fisheries Department databases
 
-## ✅ Conclusion
+##  Conclusion
 This system design establishes a scalable and secure architecture for connecting fisherfolks and buyers in Kenya through a centralized digital fish marketplace. By aligning technical design with the project’s mission of reducing waste, increasing income, and empowering local fishing communities, this platform becomes a critical step toward a more sustainable digital blue economy.
