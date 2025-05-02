@@ -1,4 +1,4 @@
-# 🐟 Fish Market Platform - System Design Document
+# 🐟 Fish Market Platform - System Design 
 
 ## Overview
 This document outlines the system design for the Fish Market Platform — a web-based application that directly connects Kenyan fisherfolks to buyers, streamlining fish sales and reducing post-harvest losses in the blue economy. The system leverages modern web technologies (React.js, Supabase) for seamless user experiences, real-time updates, and scalability.
