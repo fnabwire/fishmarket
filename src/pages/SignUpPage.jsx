@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaUser,
   FaEnvelope,
@@ -12,14 +12,17 @@ import {
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userAuth } from "../contexts/AuthContext";
 
-function SignupPage() {
+export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("buyer");
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -41,9 +44,13 @@ function SignupPage() {
     setPasswordStrength(strength);
   };
 
-  const handleSubmit = (e) => {
+  //signUpNewUser function from AuthContext
+  const { signUpNewUser } = userAuth();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
+    setError(null);
     // Simple validation
     if (!name || !email || !password) {
       toast.error("Please fill in all fields.");
@@ -54,9 +61,26 @@ function SignupPage() {
       toast.warning("Password is too weak.");
       return;
     }
-
-    toast.success("Signup successful!");
-    console.log("Signup submitted:", { name, email, password, role });
+    try {
+      const { sucess, data } = await signUpNewUser(name, email, password, role);
+      if (sucess) {
+        toast.success("Signup successful!");
+        console.log("User data:", data.user);
+        if (role === "fisherman") {
+          navigate("/fisherman-dashboard"); // Redirect to admin dashboard
+        }
+        if (role === "buyer") {
+          navigate("/buyer-dashboard"); // Redirect to admin dashboard
+        }
+      } else {
+        alert("Error signing up. Please try again.");
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+    // console.log("Signup submitted:", { name, email, password, role });
   };
 
   return (
@@ -180,10 +204,11 @@ function SignupPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 px-4 rounded-lg text-white font-semibold bg-gradient-to-r from-[#29ABE2] to-[#0077BE] hover:opacity-90 transition-all duration-200"
+              className="w-full py-2 px-4 cursor-pointer rounded-lg text-white font-semibold bg-gradient-to-r from-[#29ABE2] to-[#0077BE] hover:opacity-90 transition-all duration-200"
             >
-              Sign Up
+              {loading ? "Creating Account..." : "Sign Up"}
             </button>
+            
 
             {/* Divider */}
             <div className="flex items-center justify-center space-x-2 text-gray-400">
@@ -218,5 +243,3 @@ function SignupPage() {
     </>
   );
 }
-
-export default SignupPage;
