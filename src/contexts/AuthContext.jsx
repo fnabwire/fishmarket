@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState("");
+    const [error, setError] = useState(null);
 
   // signUp function
   const signUpNewUser = async (name, email, password, role) => {
@@ -12,6 +13,12 @@ export const AuthProvider = ({ children }) => {
      const { data, error: signUpError } = await supabase.auth.signUp({
         email: email,
         password: password,
+        options: {
+          data: {
+            name: name,
+            role: role,
+          },
+        },
       })
 
       if (signUpError) {
@@ -20,7 +27,7 @@ export const AuthProvider = ({ children }) => {
         return
       }
   
-      // Insert additional data into users table
+    //   Insert additional data into users table
     const user = data.user
     const { error: insertError } = await supabase.from('users').insert([
       {
@@ -58,9 +65,15 @@ export const AuthProvider = ({ children }) => {
     });
     if (error) {
       console.error("Error signing in:", error.message);
+      setError(error.message);
     } else {
       setSession(data.session);
+      alert("Sign in successful!");
     }
+    console.log("Sign in data:", data.session);
+    
+    return { data, error };
+
   };
 
   // signOut function

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaFish, FaEdit, FaTrash, FaFileInvoice, FaCheck, FaTimes } from "react-icons/fa";
 import AddFishForm from "./AddFishForm";
+import { userAuth } from "../contexts/AuthContext";
 
 const listings = [
   {
@@ -24,6 +25,7 @@ const orders = [
 
 const FishermanDashboard = () => {
   const [showAddFishForm, setShowAddFishForm] = useState(false);
+  const {session} = userAuth()
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -31,7 +33,7 @@ const FishermanDashboard = () => {
       <div className="max-w-6xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
           <FaFish className="text-blue-600" />
-          Welcome, Fisherman Mike 👋
+          Welcome, Fisherman {} 👋
         </h2>
 
         <button

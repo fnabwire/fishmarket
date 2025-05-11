@@ -15,6 +15,7 @@ export function CartProvider({ children }) {
     setCartItems((prev) => [...prev, item]);
     console.log("Added to cart:", item);
   };
+  
 
   return (
     <CartContext.Provider

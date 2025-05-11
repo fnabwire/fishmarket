@@ -1,30 +1,68 @@
-import Navbar from '../components/Navbar';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Navbar from "../components/Navbar";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaGoogle,
+} from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { userAuth } from "../contexts/AuthContext";
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { signIn, session } = userAuth(); // Assuming you have a signIn function in your AuthContext
+  const navigate = useNavigate(); // Assuming you have a useNavigate hook from react-router-dom
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     if (!email || !password) {
-      toast.error('Please enter both email and password.');
+      toast.error("Please enter both email and password.");
       return;
     }
+    try {
+      const {data, error } = await signIn(email, password);
 
-    toast.success('Login successful!');
-    console.log('Login submitted:', { email, password, rememberMe });
+      if (!error) {
+        toast.success("Sign in successful!");
+        console.log("Authenticated user:", data.user);
+
+
+        const role = data.user.user_metadata.role; // Assuming role is stored in user_metadata
+        console.log("User role:", role);
+        // redirect based on the role
+        if (role === 'fisherman') {
+          navigate('/fisherman-dashboard');
+        } else if (role === 'buyer') {
+          navigate('/buyer-dashboard');
+        } else if (role === 'admin') {
+          navigate('/admin-dashboard');
+        } else {
+          toast.error("Unknown role. Cannot redirect.");
+        }
+      } else {
+        toast.error("Invalid email or password.");
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,12 +71,18 @@ function LoginPage() {
       <ToastContainer />
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-100">
         <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-          <h2 className="text-3xl font-bold text-center text-[#0077BE] mb-6">Login to Your Account</h2>
+          <h2 className="text-3xl font-bold text-center text-[#0077BE] mb-6">
+            Login to Your Account
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-5">
-
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Email
+              </label>
               <div className="relative">
                 <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
@@ -54,12 +98,17 @@ function LoginPage() {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Password
+              </label>
               <div className="relative">
                 <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input
                   id="password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -85,7 +134,10 @@ function LoginPage() {
                 />
                 Remember Me
               </label>
-              <Link to="/forgot-password" className="text-[#29ABE2] hover:text-[#0077BE] font-medium">
+              <Link
+                to="/forgot-password"
+                className="text-[#29ABE2] hover:text-[#0077BE] font-medium"
+              >
                 Forgot Password?
               </Link>
             </div>
@@ -93,9 +145,9 @@ function LoginPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 px-4 rounded-lg text-white font-semibold bg-gradient-to-r from-[#29ABE2] to-[#0077BE] hover:opacity-90 transition-all duration-200"
+              className="w-full py-2 px-4 cursor-pointer rounded-lg text-white font-semibold bg-gradient-to-r from-[#29ABE2] to-[#0077BE] hover:opacity-90 transition-all duration-200"
             >
-              Login
+              {loading ? "Loading..." : "Login"}
             </button>
 
             {/* Divider */}
@@ -108,7 +160,7 @@ function LoginPage() {
             {/* Google Button */}
             <button
               type="button"
-              onClick={() => toast.info('Google login coming soon...')}
+              onClick={() => toast.info("Google login coming soon...")}
               className="w-full py-2 px-4 border border-gray-300 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-100 transition-all"
             >
               <FaGoogle className="text-red-500" />
@@ -117,8 +169,11 @@ function LoginPage() {
 
             {/* Signup Redirect */}
             <p className="text-center text-sm mt-4">
-              Don’t have an account?{' '}
-              <Link to="/signup" className="text-[#29ABE2] hover:text-[#0077BE] font-medium">
+              Don’t have an account?{" "}
+              <Link
+                to="/signup"
+                className="text-[#29ABE2] hover:text-[#0077BE] font-medium"
+              >
                 Sign Up
               </Link>
             </p>
