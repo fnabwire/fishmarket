@@ -39,6 +39,15 @@ const AddFishForm = () => {
     }
   };
 
+  // Handle image preview
+  useEffect(() => {
+    if (formData.image) {
+      const objectUrl = URL.createObjectURL(formData.image);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl); // Cleanup
+    }
+  }, [formData.image]);
+
   // Submit form
   const handleSubmit = (e) => {
     e.preventDefault();

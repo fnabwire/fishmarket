@@ -35,33 +35,34 @@ function LoginPage() {
       toast.error("Please enter both email and password.");
       return;
     }
-    try {
-      const {data, error } = await signIn(email, password);
+    const { data, error } = await signIn(email, password);
+    console.log("Login data:", data);
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    const { user } = data;
+    console.log("User data:", user);
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    setLoading(false);
 
-      if (!error) {
-        toast.success("Sign in successful!");
-        console.log("Authenticated user:", data.user);
-
-
-        const role = data.user.user_metadata.role; // Assuming role is stored in user_metadata
-        console.log("User role:", role);
-        // redirect based on the role
-        if (role === 'fisherman') {
-          navigate('/fisherman-dashboard');
-        } else if (role === 'buyer') {
-          navigate('/buyer-dashboard');
-        } else if (role === 'admin') {
-          navigate('/admin-dashboard');
-        } else {
-          toast.error("Unknown role. Cannot redirect.");
-        }
-      } else {
-        toast.error("Invalid email or password.");
-      }
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    console.log("Profile data:", profile);
+    switch (profile?.role) {
+      case "admin":
+        navigate("/admin-dashboard");
+        break;
+      case "fisherman":
+        navigate("/fisherman-dashboard");
+        break;
+      case "buyer":
+        navigate("/buyer-dashboard");
+        break;
+      default:
+        alert("No role assigned");
     }
   };
 
@@ -185,3 +186,5 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+// password, u4GjPQQ0qA0LOhT4

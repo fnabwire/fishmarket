@@ -62,15 +62,16 @@ export default function SignupPage() {
       return;
     }
     try {
-      const { sucess, data } = await signUpNewUser(name, email, password, role);
+      const { sucess } = await signUpNewUser(name, email, password, role);
       if (sucess) {
         toast.success("Signup successful!");
-        console.log("User data:", data.user);
-        if (role === "fisherman") {
-          navigate("/fisherman-dashboard"); // Redirect to admin dashboard
-        }
+        //navigate depending on the role
         if (role === "buyer") {
-          navigate("/buyer-dashboard"); // Redirect to admin dashboard
+          navigate("/buyer-dashboard");
+        } else if (role === "fisherman") {
+          navigate("/fisherman-dashboard");
+        } else if (role === "admin") {
+          navigate("/admin-dashboard");
         }
       } else {
         alert("Error signing up. Please try again.");
@@ -208,7 +209,6 @@ export default function SignupPage() {
             >
               {loading ? "Creating Account..." : "Sign Up"}
             </button>
-            
 
             {/* Divider */}
             <div className="flex items-center justify-center space-x-2 text-gray-400">
