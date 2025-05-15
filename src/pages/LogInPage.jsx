@@ -11,6 +11,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userAuth } from "../contexts/AuthContext";
+import { supabase } from "../supabaseClient";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { signIn, session } = userAuth(); // Assuming you have a signIn function in your AuthContext
+  const { signIn, session, setLoggedInUser } = userAuth(); // Assuming you have a signIn function in your AuthContext
   const navigate = useNavigate(); // Assuming you have a useNavigate hook from react-router-dom
 
   const togglePasswordVisibility = () => {
@@ -35,13 +36,21 @@ function LoginPage() {
       toast.error("Please enter both email and password.");
       return;
     }
-    const { data, error } = await signIn(email, password);
-    console.log("Login data:", data);
+    // const signInResult = await signIn(email, password); // Log the result here
+    // console.log("Sign In Result:", signInResult); // Add this line
+    // const { data, error } = signInResult; // Destructure after logging
+     const { data:Logindata, error } = await supabase.auth.signInWithPassword(
+      {
+        email: email,
+        password: password,
+      }
+    );
+    console.log("Login data:", Logindata);
     if (error) {
       alert(error.message);
       return;
     }
-    const { user } = data;
+    const { user } = Logindata;
     console.log("User data:", user);
     const { data: profile } = await supabase
       .from("profiles")
@@ -49,21 +58,22 @@ function LoginPage() {
       .eq("id", user.id)
       .single();
     setLoading(false);
-
-    console.log("Profile data:", profile);
-    switch (profile?.role) {
-      case "admin":
-        navigate("/admin-dashboard");
-        break;
-      case "fisherman":
-        navigate("/fisherman-dashboard");
-        break;
-      case "buyer":
-        navigate("/buyer-dashboard");
-        break;
-      default:
-        alert("No role assigned");
-    }
+    setLoggedInUser(profile);
+    const role = profile.role;
+    console.log("Profile data:", role);
+    //redirect to the appropriate dashboard based on role
+    navigate(`/${role}-dashboard`);
+    // navigate("/fisherman-dashboard")
+    // if (role === "admin") {
+    //   navigate("/admin-dashboard");
+    // } else if (role === "fisherman") {
+    //   navigate("/fisherman-dashboard");
+    // } else if (role === "buyer") {
+    //   navigate("/buyer-dashboard");
+    // } else {
+    //   toast.error("Unauthorized access.");
+    //   navigate("/unauthorized");
+    // }
   };
 
   return (

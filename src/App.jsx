@@ -12,17 +12,28 @@ import AdminDashboardPage from "./pages/AdminDashboardPage";
 import FisherManDashboardPage from "./pages/FisherManDashboardPage";
 import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { supabase } from "./supabaseClient";
+import { userAuth } from "./contexts/AuthContext";
 
 function App() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getSession();
-      setUser(data?.session?.user ?? null);
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const { data } = await supabase.auth.getSession();
+  //     const user = data?.session?.user ?? null;
+  //     setUser(user);
+  //     console.log("Logged in user:", user); // Now user is available
+  //   };
+  //   getUser();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("Logged in user:", user);
+  //   }
+  // }, []);
+  const { loggedInUser:user } = userAuth(); // Assuming you have a useContext for Auth
 
   return (
     <>
