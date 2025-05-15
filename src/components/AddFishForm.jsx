@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { FaFish, FaCamera, FaMapMarkerAlt } from 'react-icons/fa';
+import { userAuth } from '../contexts/AuthContext';
 
 const AddFishForm = () => {
+  const { loggedInUser } = userAuth();
   const [formData, setFormData] = useState({
-    name: '',
+    fishName: '',
     description: '',
     price: '',
     quantity: '',
     image: null,
     location: '',
+    status: 'Available',
+    // Assuming loggedInUser has an id property
+    mvuviId: loggedInUser?.id,
   });
 
   const [preview, setPreview] = useState(null);
@@ -68,7 +73,7 @@ const AddFishForm = () => {
           <label className="block font-semibold mb-1">Fish Name</label>
           <input
             type="text"
-            name="name"
+            name="fishName"
             className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="e.g., Tilapia"
             required

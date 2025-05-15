@@ -54,26 +54,17 @@ function LoginPage() {
     console.log("User data:", user);
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("*")
       .eq("id", user.id)
       .single();
     setLoading(false);
     setLoggedInUser(profile);
     const role = profile.role;
     console.log("Profile data:", role);
+    console.log("Profile data:", profile);
+
     //redirect to the appropriate dashboard based on role
     navigate(`/${role}-dashboard`);
-    // navigate("/fisherman-dashboard")
-    // if (role === "admin") {
-    //   navigate("/admin-dashboard");
-    // } else if (role === "fisherman") {
-    //   navigate("/fisherman-dashboard");
-    // } else if (role === "buyer") {
-    //   navigate("/buyer-dashboard");
-    // } else {
-    //   toast.error("Unauthorized access.");
-    //   navigate("/unauthorized");
-    // }
   };
 
   return (

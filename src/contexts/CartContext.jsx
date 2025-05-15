@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartVisible, setCartVisible] = useState(true);
+  const [cartVisible, setCartVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   const toggleCart = () => {    

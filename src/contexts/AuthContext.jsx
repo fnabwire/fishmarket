@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -66,7 +67,8 @@ export const AuthProvider = ({ children }) => {
     if (error) {
       console.error("Error signing out:", error.message);
     } else {
-      setSession(null);
+      setLoggedInUser(null);
+      Navigate("/login");
     }
   };
 

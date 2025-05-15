@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "../contexts/CartContext";
+import { userAuth } from "../contexts/AuthContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const {toggleCart, cartItems} = useContext(CartContext);
+  const { toggleCart, cartItems } = useContext(CartContext);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const { loggedInUser, signOut } = userAuth();
 
   const navLinks = () => (
     <>
@@ -28,20 +30,29 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <Link
-          to="/fisherman-dashboard"
-          className="hover:text-[#FFC107] transition duration-300 block"
-        >
-          Fisherfolk
-        </Link>
+        {loggedInUser?.role === "fisherman" ? (
+          <Link
+            to="/fisherman-dashboard"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          ""
+        )}
       </li>
       <li>
-        <Link
-          to="/buyer-dashboard"
-          className="hover:text-[#FFC107] transition duration-300 block"
-        >
-          Buyer
-        </Link>
+        {/* return buyer conditionaly if the role is buyer  */}
+        {loggedInUser?.role === "buyer" ? (
+          <Link
+            to="/buyer-dashboard"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          ""
+        )}
       </li>
       <li>
         <Link
@@ -52,25 +63,45 @@ export default function Navbar() {
         </Link>
       </li>
       <li>
-        <Link
-          to="/login"
-          className="hover:text-[#FFC107] transition duration-300 block"
-        >
-          Log In
-        </Link>
+        {!loggedInUser ? (
+          <Link
+            to="/login"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            Log In
+          </Link>
+        ) : (
+          <Link
+            to="/"
+            className="hover:text-[#FFC107] transition duration-300 block"
+            onClick={() => {
+              console.log("Logging out...");
+              
+              signOut();
+            }}
+          >
+            Log Out
+          </Link>
+        )}
       </li>
       <li>
-        <Link
-          to="/signup"
-          className="hover:text-[#FFC107] transition duration-300 block"
-        >
-          Sign Up
-        </Link>
+        {!loggedInUser ? (
+          <Link
+            to="/signup"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            Sign Up
+          </Link>
+        ) : (
+          ""
+        )}
       </li>
       <li>
         <div className="relative cursor-pointer" onClick={toggleCart}>
           <i className="fa fa-shopping-cart text-md" aria-hidden="true"></i>
-          <span className="absolute top-0 text-xs font-bold">{cartItems.length}</span>
+          <span className="absolute top-0 text-xs font-bold">
+            {cartItems.length}
+          </span>
         </div>
       </li>
     </>
@@ -99,5 +130,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-

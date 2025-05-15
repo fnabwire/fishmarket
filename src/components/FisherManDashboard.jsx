@@ -25,7 +25,7 @@ const orders = [
 
 const FishermanDashboard = () => {
   const [showAddFishForm, setShowAddFishForm] = useState(false);
-  const {session} = userAuth()
+  const {loggedInUser} = userAuth()
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
@@ -33,7 +33,7 @@ const FishermanDashboard = () => {
       <div className="max-w-6xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
           <FaFish className="text-blue-600" />
-          Welcome, Fisherman {} 👋
+          Welcome, {(loggedInUser?.name)} 👋
         </h2>
 
         <button
