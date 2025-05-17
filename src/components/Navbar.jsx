@@ -65,6 +65,39 @@ export default function Navbar() {
       <li>
         {!loggedInUser ? (
           <Link
+            to="/signup"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            Sign Up
+          </Link>
+        ) : (
+          ""
+        )}
+      </li>
+      <li>
+        {loggedInUser ? (
+          <Link
+            to="/signup"
+            className="hover:text-[#FFC107] transition duration-300 block"
+          >
+            {/* user profile icon with react iconx */}
+            <i className="fa fa-user text-md" aria-hidden="true"></i>
+          </Link>
+        ) : (
+          ""
+        )}
+      </li>
+      <li>
+        <div className="relative cursor-pointer" onClick={toggleCart}>
+          <i className="fa fa-shopping-cart text-md" aria-hidden="true"></i>
+          <span className="absolute top-0 text-xs font-bold px-2">
+            {cartItems.length}
+          </span>
+        </div>
+      </li>
+      <li>
+        {!loggedInUser ? (
+          <Link
             to="/login"
             className="hover:text-[#FFC107] transition duration-300 block"
           >
@@ -83,26 +116,6 @@ export default function Navbar() {
             Log Out
           </Link>
         )}
-      </li>
-      <li>
-        {!loggedInUser ? (
-          <Link
-            to="/signup"
-            className="hover:text-[#FFC107] transition duration-300 block"
-          >
-            Sign Up
-          </Link>
-        ) : (
-          ""
-        )}
-      </li>
-      <li>
-        <div className="relative cursor-pointer" onClick={toggleCart}>
-          <i className="fa fa-shopping-cart text-md" aria-hidden="true"></i>
-          <span className="absolute top-0 text-xs font-bold">
-            {cartItems.length}
-          </span>
-        </div>
       </li>
     </>
   );

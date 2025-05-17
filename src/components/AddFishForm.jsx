@@ -1,42 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { FaFish, FaCamera, FaMapMarkerAlt } from 'react-icons/fa';
-import { userAuth } from '../contexts/AuthContext';
+import React, { useState, useEffect } from "react";
+import { FaFish, FaCamera, FaMapMarkerAlt } from "react-icons/fa";
+import { userAuth } from "../contexts/AuthContext";
+import { supabase } from "../supabaseClient";
+import { useFishList } from "../contexts/FishListContext";
 
 const AddFishForm = () => {
   const { loggedInUser } = userAuth();
   const [formData, setFormData] = useState({
-    fishName: '',
-    description: '',
-    price: '',
-    quantity: '',
+    fishName: "",
+    description: "",
+    price: "",
+    quantity: "",
     image: null,
-    location: '',
-    status: 'Available',
+    location: "",
+    status: "Available",
     // Assuming loggedInUser has an id property
     mvuviId: loggedInUser?.id,
   });
 
   const [preview, setPreview] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true);
+  const {refetch} = useFishList();
 
   // Auto-fetch geolocation on mount
   useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const coords = `${pos.coords.latitude},${pos.coords.longitude}`;
-        setFormData((prev) => ({ ...prev, location: coords }));
-        setLoadingLocation(false);
-      }, () => {
-        setFormData((prev) => ({ ...prev, location: 'Location not available' }));
-        setLoadingLocation(false);
-      });
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const coords = `${pos.coords.latitude},${pos.coords.longitude}`;
+          setFormData((prev) => ({ ...prev, location: coords }));
+          setLoadingLocation(false);
+        },
+        () => {
+          setFormData((prev) => ({
+            ...prev,
+            location: "Location not available",
+          }));
+          setLoadingLocation(false);
+        }
+      );
     }
   }, []);
 
   // Handle form changes
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'image') {
+    if (name === "image") {
       setFormData((prev) => ({ ...prev, image: files[0] }));
       setPreview(URL.createObjectURL(files[0]));
     } else {
@@ -53,12 +62,77 @@ const AddFishForm = () => {
     }
   }, [formData.image]);
 
-  // Submit form
-  const handleSubmit = (e) => {
+  // // Submit form
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // Submit logic goes here
+  //   console.log('Submitting:', formData);
+  //   alert('Fish added successfully!');
+  // };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit logic goes here
-    console.log('Submitting:', formData);
-    alert('Fish added successfully!');
+    // setUploading(true);
+    // setMessage("");
+    console.log("Submitting fish data", formData);
+
+    let imageUrl = null;
+
+    // Upload image to Supabase Storage
+    if (formData.image) {
+      const { data, error } = await supabase.storage
+        .from("fish-images")
+        .upload(`public${Date.now()}_${formData.image.name}`, formData.image, {
+          contentType: formData.image.type,
+        });
+
+      if (error) {
+        console.error("Error uploading image:", error.message);
+        // setMessage("Image upload failed");
+        // setUploading(false);
+        return;
+      }
+
+      imageUrl = `${
+        import.meta.env.VITE_SUPABASE_URL
+      }/storage/v1/object/public/fish-images/${data.path}`;
+    }
+
+    // Insert data into the database
+    const { error } = await supabase.from("fish_listings").insert([
+      {
+        fish_name: formData.fishName,
+        description: formData.description,
+        price: parseFloat(formData.price),
+        quantity: parseInt(formData.quantity),
+        location: formData.location,
+        // category: formData.category,
+        image_url: imageUrl,
+        mvuvi_id: loggedInUser?.id,
+        status: "Available",
+      },
+    ]);
+
+    if (error) {
+      console.error("Error inserting fish data:", error.message);
+      // setMessage("Fish listing failed");
+      // setUploading(false);
+      return;
+    } else {
+      console.log("Fish data inserted successfully");
+      setFormData({
+        fishName: "",
+        description: "",
+        price: "",
+        quantity: "",
+        // location: "",
+        category: "",
+        image: null,
+      });
+      refetch();
+    }
+
+    console.log("Fish data submitted");
+    // setUploading(false);
   };
 
   return (
@@ -66,7 +140,7 @@ const AddFishForm = () => {
       <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-blue-800">
         <FaFish className="text-blue-500" /> Add New Fish
       </h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Fish Name */}
         <div>
@@ -78,6 +152,7 @@ const AddFishForm = () => {
             placeholder="e.g., Tilapia"
             required
             onChange={handleChange}
+            value={formData.fishName}
           />
         </div>
 
@@ -90,6 +165,7 @@ const AddFishForm = () => {
             className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Short description of the fish..."
             onChange={handleChange}
+            value={formData.description}
           />
         </div>
 
@@ -103,6 +179,7 @@ const AddFishForm = () => {
               className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
               onChange={handleChange}
+              value={formData.price}
             />
           </div>
           <div>
@@ -113,6 +190,7 @@ const AddFishForm = () => {
               className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
               onChange={handleChange}
+              value={formData.quantity}
             />
           </div>
         </div>
@@ -131,7 +209,13 @@ const AddFishForm = () => {
               className="hidden"
               required
             />
-            {preview && <img src={preview} alt="preview" className="mt-4 w-32 h-32 object-cover rounded-lg shadow" />}
+            {preview && (
+              <img
+                src={preview}
+                alt="preview"
+                className="mt-4 w-32 h-32 object-cover rounded-lg shadow"
+              />
+            )}
           </label>
         </div>
 
@@ -141,7 +225,9 @@ const AddFishForm = () => {
           {loadingLocation ? (
             <span>Getting location...</span>
           ) : (
-            <span className="text-sm italic">Location: {formData.location}</span>
+            <span className="text-sm italic">
+              Location: {formData.location}
+            </span>
           )}
         </div>
 

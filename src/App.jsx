@@ -14,6 +14,7 @@ import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { supabase } from "./supabaseClient";
 import { userAuth } from "./contexts/AuthContext";
+import ProfilePage from "./components/Profile";
 
 function App() {
   // const [user, setUser] = useState(null);
@@ -46,6 +47,8 @@ function App() {
           <Route path="/fish-listings" element={<FishListingsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/profile" element={<ProfilePage />} />
+
 
           <Route
             element={
