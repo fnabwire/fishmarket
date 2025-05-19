@@ -5,6 +5,9 @@ import { supabase } from "../supabaseClient";
 import { useFishList } from "../contexts/FishListContext";
 
 const AddFishForm = () => {
+  const [preview, setPreview] = useState(null);
+  const [loadingLocation, setLoadingLocation] = useState(true);
+  const {refetch} = useFishList();
   const { loggedInUser } = userAuth();
   const [formData, setFormData] = useState({
     fishName: "",
@@ -16,11 +19,20 @@ const AddFishForm = () => {
     status: "Available",
     // Assuming loggedInUser has an id property
     mvuviId: loggedInUser?.id,
+    mvuvi_name: "",
   });
 
-  const [preview, setPreview] = useState(null);
-  const [loadingLocation, setLoadingLocation] = useState(true);
-  const {refetch} = useFishList();
+  //get the name of the logged in user
+  const getName = async () => {
+    const { data: name } = await supabase
+      .from("profiles")
+      .select("name")
+      .eq("id", loggedInUser?.id)
+      .single();
+      console.log("Name of the logged in user:", name);
+    return name;
+  };
+  
 
   // Auto-fetch geolocation on mount
   useEffect(() => {
@@ -97,6 +109,7 @@ const AddFishForm = () => {
       }/storage/v1/object/public/fish-images/${data.path}`;
     }
 
+    const { name: mvuviName } = await getName();
     // Insert data into the database
     const { error } = await supabase.from("fish_listings").insert([
       {
@@ -105,9 +118,9 @@ const AddFishForm = () => {
         price: parseFloat(formData.price),
         quantity: parseInt(formData.quantity),
         location: formData.location,
-        // category: formData.category,
         image_url: imageUrl,
         mvuvi_id: loggedInUser?.id,
+        mvuvi_name: mvuviName,
         status: "Available",
       },
     ]);

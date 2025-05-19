@@ -3,8 +3,19 @@
 import { useContext } from "react";
 import { useFishList } from "../contexts/FishListContext";
 import { CartContext } from "../contexts/CartContext";
+import { supabase } from "../supabaseClient";
 
 export default function FishListings() {
+  
+  // const getName = async (id) => {
+  //   const { data } = await supabase
+  //         .from("profiles")
+  //         .select("*")
+  //         .eq("id", id)
+  //         .single();
+  //   return data?.name;
+  // }
+  
   const {
     fishList,
     loading,
@@ -77,7 +88,7 @@ export default function FishListings() {
               />
               <div className="p-4 flex-grow">
                 <h2 className="text-lg font-semibold">{fish.fish_name}</h2>
-                <p className="text-sm text-gray-600">By {fish.id}</p>
+                <p className="text-sm text-gray-600">By {fish.mvuvi_name}</p>
                 <p className="text-sm text-gray-800 mt-1">
                   Price:{" "}
                   <span className="font-medium">Ksh {fish.price}/kg</span>

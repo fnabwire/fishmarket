@@ -39,12 +39,11 @@ function LoginPage() {
     // const signInResult = await signIn(email, password); // Log the result here
     // console.log("Sign In Result:", signInResult); // Add this line
     // const { data, error } = signInResult; // Destructure after logging
-     const { data:Logindata, error } = await supabase.auth.signInWithPassword(
-      {
-        email: email,
-        password: password,
-      }
-    );
+    const { data: Logindata, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
     console.log("Login data:", Logindata);
     if (error) {
       alert(error.message);
@@ -65,6 +64,7 @@ function LoginPage() {
 
     //redirect to the appropriate dashboard based on role
     navigate(`/${role}-dashboard`);
+    
   };
 
   return (

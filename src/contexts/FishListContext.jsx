@@ -34,6 +34,22 @@ export const FishListProvider = ({ children }) => {
     fetchFish();
   }, []);
 
+  //get single fisherman data by id
+//     try {
+//     getFisherManName = async (fishermanId)=> {
+//     const { data: profile } = await supabase
+//           .from("profiles")
+//           .select("*")
+//           .eq("id", fishermanId)
+//           .single();
+//     return profile.name;
+//   }
+    
+//   } catch (error) {
+//     console.error("Error fetching fisherman name:", error);
+//     return "Unknown Fisherman";
+//   }
+
   // Apply filtering
   const filteredFish = useMemo(() => {
     return fishList.filter((fish) => {
@@ -61,12 +77,14 @@ export const FishListProvider = ({ children }) => {
         setSearchTerm,
         selectedLocation,
         setSelectedLocation,
+        // getFisherManName
       }}
     >
       {children}
     </FishListContext.Provider>
   );
 };
+
 
 // Custom hook
 export const useFishList = () => {

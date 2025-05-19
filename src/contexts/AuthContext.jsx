@@ -40,10 +40,13 @@ export const AuthProvider = ({ children }) => {
       if (error) {
         console.error("Error setting session:", error.message);
       } else {
-        setSession(data.session);
+        setSession(data.session.user);
       }
     });
   }, []);
+
+  //save session to session storage
+
 
   // signIn function
   const signIn = async (email, password) => {
